@@ -11,9 +11,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import social.entity.User;
 import social.forms.UserRegistrationForm;
-import social.service.UserDetailsServiceImpl;
+import social.service.BindingResultService;
+import social.service.Impl.UserDetailsServiceImpl;
 import social.service.UserService;
-import social.service.UserServiceImpl;
+import social.service.gson.GsonService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,9 +31,12 @@ public class RegisterController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private GsonService gsonService;
+
+    @Autowired
+    private BindingResultService bindingResultService;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String showRegisterPage(Model model) {
@@ -47,15 +51,13 @@ public class RegisterController {
                           HttpServletResponse response) {
         isExist(user, result);
         isPasswordsMatch(user, result);
+        Gson gson = gsonService.standardBuilder();
         if (result.hasErrors()) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            HashMap<String, Object> returnJSON = new HashMap<>();
-            returnJSON.put("errors", getErrors(result));
-            return gson.toJson(returnJSON);
+            return gson.toJson(bindingResultService);
         } else {
-            userService.addUser(new User(user));
-            return "redirect:/login";
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            User newUser = userService.addUser(new User(user));
+            return gson.toJson(newUser);
         }
 
     }

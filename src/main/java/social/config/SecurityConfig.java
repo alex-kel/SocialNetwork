@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import social.service.UserDetailsServiceImpl;
+import social.service.Impl.UserDetailsServiceImpl;
 
 /**
  * Created by Alexander on 12.02.2015.
