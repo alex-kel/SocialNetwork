@@ -1,7 +1,7 @@
 package social.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import social.forms.UserRegistrationForm;
+import social.controller.forms.UserRegistrationForm;
 
 import javax.persistence.*;
 

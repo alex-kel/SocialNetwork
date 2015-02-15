@@ -7,3 +7,5 @@
 --%>
 <link href="resources/css/bootstrap.css" rel="stylesheet">
 <link href="resources/css/mycss.css" rel="stylesheet">
+<script src="resources/js/jquery-2.1.3.min.js"></script>
+<script src="resources/js/myapp.js"></script>

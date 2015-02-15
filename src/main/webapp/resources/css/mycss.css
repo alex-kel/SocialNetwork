@@ -87,5 +87,10 @@ input {
 
 .like {
     float: right;
+}
 
+.error {
+    color: red;
+    font-size: 11px;
+    float: right;
 }

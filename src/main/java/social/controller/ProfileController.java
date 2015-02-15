@@ -4,24 +4,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import social.controller.forms.ProfileEditForm;
 import social.entity.User;
 import social.entity.UserProfile;
+import social.repository.UserProfileRepository;
 import social.service.UserService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Alexander on 14.02.2015.
  */
 @Controller
-@RequestMapping(value = "/profile/{sid}", method = RequestMethod.GET)
 public class ProfileController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping()
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public void editProfile(@RequestBody ProfileEditForm profileEditForm, BindingResult result,
+                            HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        User user = userService.getCurrentSessionUser();
+        UserProfile profile = user.getUserProfile();
+        profile.setFullName(profileEditForm.getFullName());
+        profile.setAbout(profileEditForm.getAbout());
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = format.parse(profileEditForm.getBirthDate());
+        } catch (Exception e) {}
+        profile.setBirthDate(date);
+        profile.setEmail(profile.getEmail());
+        profile.setCity(profileEditForm.getCity());
+        profile.setPhoneNumber(profileEditForm.getPhoneNumber());
+        userProfileRepository.save(profile);
+        response.setStatus(200);
+    }
+
+    @RequestMapping(value = "/myprofile", method = RequestMethod.GET)
+    public String redirectToSessionUserProfile() {
+        Long id = userService.getCurrentSessionUser().getId();
+        return "redirect:/profile/" + id;
+    }
+
+    @RequestMapping(value = "/profile/{sid}", method = RequestMethod.GET)
     public String showProfile(@PathVariable String sid, Model model) {
         Long id = Long.parseLong(sid);
         User user = userService.getUserById(id);
@@ -50,4 +90,5 @@ public class ProfileController {
             return "profile";
         }
     }
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import social.entity.User;
 import org.springframework.stereotype.Service;
+import social.entity.UserProfile;
 import social.repository.UserRepository;
 
 import java.util.List;
@@ -44,4 +45,5 @@ public class UserServiceImpl implements social.service.UserService {
         User user = userRepository.findByLogin(sessionUser.getUsername());
         return user;
     }
+
 }

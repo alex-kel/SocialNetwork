@@ -6,10 +6,12 @@
 
 <head>
     <%@ include file="part/links-part.jsp" %>
+
 </head>
 
 <body>
 <%@ include file="part/navigation-bar.jsp" %>
+
 <div class="index">
     <div class="container" style="padding-top: 40px">
         <div class="jumbotron" style="margin-top: 20px;">

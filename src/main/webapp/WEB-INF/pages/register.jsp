@@ -11,16 +11,18 @@
 <head>
     <title>Register</title>
     <jsp:include page="part/links-part.jsp"></jsp:include>
+    <script src="resources/js/register.js"></script>
+    <%--<script src="http://code.jquery.com/jquery-1.9.0.js"></script>--%>
 </head>
 <body>
 <div class="register">
     <div class="container">
-        <form method="post">
+        <form id="register" method="post">
             <h2 class="form-heading">Registration</h2>
-            <input type="text" class="form-control" name="login" placeholder="Login">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <input type="password" class="form-control" name="confirmPassword" placeholder="Password again">
-            <input type="text" class="form-control"  name="fullName" placeholder="Full name">
+            <div style="display: inline"><input type="text" class="form-control" name="login" placeholder="Login"></div>
+            <div style="display: inline"><input type="password" class="form-control" name="password" placeholder="Password"></div>
+            <div style="display: inline"><input type="password" class="form-control" name="confirmPassword" placeholder="Password again"></div>
+            <div style="display: inline"><input type="text" class="form-control"  name="fullName" placeholder="Full name"></div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
         </form>
     </div>

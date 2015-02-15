@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <jsp:include page="part/links-part.jsp"></jsp:include>
+    <script src="resources/js/login.js"></script>
 </head>
 
 <body>
