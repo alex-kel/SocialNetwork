@@ -19,7 +19,32 @@ public class Like {
     @JoinColumn(name = "owner_user_id")
     private User owner;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_user_id")
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }

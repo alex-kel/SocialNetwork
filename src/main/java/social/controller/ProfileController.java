@@ -5,10 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import social.controller.forms.ProfileEditForm;
 import social.entity.User;
 import social.entity.UserProfile;
@@ -22,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Alexander on 14.02.2015.
@@ -89,6 +87,14 @@ public class ProfileController {
             model.addAttribute("sessionId", sessionId);
             return "profile";
         }
+    }
+
+
+    @RequestMapping(value = "/profile/wall}", method = RequestMethod.GET)
+    public @ResponseBody
+    Object getWallPosts(@RequestParam(value = "id", required = true) String id) {
+        User user = userService.getUserById(Long.parseLong(id));
+        return null;
     }
 
 }

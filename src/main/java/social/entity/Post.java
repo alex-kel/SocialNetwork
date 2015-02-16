@@ -28,7 +28,7 @@ public class Post {
     @JoinColumn(name = "author_user_id")
     private User author;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post")
     private Set<Like> likes = new HashSet<>(0);
 
     private String text;
@@ -73,5 +73,13 @@ public class Post {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }
