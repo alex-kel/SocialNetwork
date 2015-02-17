@@ -1,5 +1,6 @@
 package social.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import social.controller.api.forms.PostForm;
@@ -22,6 +23,7 @@ public class Post {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     @Column(name = "post_id")
+    @Expose
     private long id;
 
     @ManyToOne
@@ -35,11 +37,14 @@ public class Post {
         this.date = new Date();
     }
 
+    @Expose
     @ManyToOne
     private User author;
 
+    @Expose
     private String text;
 
+    @Expose
     private Date date;
 
     public Post() {

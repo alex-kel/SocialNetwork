@@ -1,5 +1,7 @@
 package social.entity;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import org.hibernate.annotations.GenericGenerator;
 import social.controller.forms.UserRegistrationForm;
 
@@ -26,6 +28,8 @@ public class User {
     @Column
     private String password;
 
+    @Expose
+    @SerializedName("details")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private UserProfile userProfile;
 

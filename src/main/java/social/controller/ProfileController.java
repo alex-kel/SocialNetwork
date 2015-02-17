@@ -85,6 +85,7 @@ public class ProfileController {
             model.addAttribute("editable", currentSessionLogin.equals(user.getLogin()) );
             model.addAttribute("id", id);
             model.addAttribute("sessionId", sessionId);
+            model.addAttribute("avatarRef", userProfile.getAvatarRef());
             return "profile";
         }
     }

@@ -22,8 +22,25 @@
 </c:if>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.postbtn').click(function() {
+
+    var postCode = "<div class=\"post col-md-12\"> "+
+            " <div class=\"post-author\"></div> " +
+            "<div class=\"post-text\"></div> " +
+            "<div class=\"post-info\"> <p class=\"date\"></p> " +
+            "<div class=\"like\"> <img src=\"/resources/img/like.png\">" +
+            "<span class=\"like-count\"></span> </div> </div> </div>";
+
+    $(document).ready(function () {
+        $(".postbtn").prop('disabled', true);
+        $(".wall-post").keyup(function() {
+            if ($(this).val().length == 0) {
+                $(".postbtn").prop('disabled', true);
+            } else {
+                $(".postbtn").prop('disabled', false);
+            }
+        });
+
+        $('.postbtn').click(function () {
             var text = $(".wall-post").val();
             var id = '${id}';
             $.ajax("/wall/createPost", {
@@ -33,11 +50,40 @@
                     "text": text,
                     "owner_id": id
                 }),
-                complete: function() {
-
+                success: function (data) {
+                    data = JSON.parse(data);
+                    addPost(data);
+                    $(".wall-post").val("");
+                    $(".postbtn").disabled(true);
                 }
             });
         });
+
+        $.ajax("/wall/getPosts", {
+            type: 'GET',
+            data: {"id": ${id}},
+            success: function (data) {
+                data = JSON.parse(data);
+                for (var i = 0; i < data.length; i++) {
+                    addPost(data[i]);
+                }
+            }
+        });
+
+        function addPost(data) {
+            var id = data.id;
+            var author = data.author.details.fullName;
+            var text = data.text;
+            var date = data.date;
+            var newPost = $('<div/>').html(postCode).contents();
+            newPost.hide();
+            newPost.addClass(id.toString());
+            newPost.find(".post-author").text(author);
+            newPost.find(".post-text").text(text);
+            newPost.find(".date").text(date);
+            $(".posts").prepend(newPost);
+            newPost.fadeIn(500);
+        }
     });
 </script>
 
@@ -52,7 +98,7 @@
             <!-- left column -->
             <div class="col-md-2">
                 <div class="text-center">
-                    <img src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg" class="avatar img-circle"
+                    <img src="${avatarRef}" class="avatar"
                          alt="avatar">
                     <button type="button" class="btn btn-success">Follow</button>
                     <button type="button" class="btn btn-primary">Send Message</button>
@@ -88,20 +134,9 @@
             <div class="col-md-4 col-lg-offset-1 wall">
                 <textarea class="form-control wall-post" rows="3"></textarea>
                 <button type="button" class="btn btn-primary postbtn" style="float: right">Post</button>
+                <div class="posts">
 
-                <div class="post col-md-12">
-                    <div class="post-author">Alexander Kel</div>
-                    <div class="post-text">sdfasdfasdfasdf</div>
-                    <div class="post-info">
-                        <p class="date">17 Jan, 18:05</p>
-
-                        <div class="like">
-                            <img src="/resources/img/like.png">
-                            <span class="like-count">5</span>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
     </div>

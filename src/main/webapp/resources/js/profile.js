@@ -3,7 +3,6 @@
  */
 $(document).ready(function () {
 
-
     $(".edit-profile").click(function (event) {
         event.preventDefault();
         $(".modal").modal('show');

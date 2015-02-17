@@ -1,5 +1,6 @@
 package social.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -26,6 +27,7 @@ public class UserProfile {
 
     private String city;
 
+    @Expose
     @Column(name = "full_name")
     private String fullName;
 
@@ -36,15 +38,7 @@ public class UserProfile {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    private String avatar;
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    private String avatarRef;
 
     private String about;
 
@@ -56,6 +50,15 @@ public class UserProfile {
         this.phoneNumber = "";
         this.about = "";
         this.email = "";
+        this.avatarRef = "/resources/img/defaultAvatar.gif";
+    }
+
+    public String getAvatarRef() {
+        return avatarRef;
+    }
+
+    public void setAvatarRef(String avatarRef) {
+        this.avatarRef = avatarRef;
     }
 
     public String getEmail() {
