@@ -20,6 +20,27 @@
         setActive();
     </script>
 </c:if>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.postbtn').click(function() {
+            var text = $(".wall-post").val();
+            var id = '${id}';
+            $.ajax("/wall/createPost", {
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "text": text,
+                    "owner_id": id
+                }),
+                complete: function() {
+
+                }
+            });
+        });
+    });
+</script>
+
 <div class="profile">
     <div class="container">
         <h1>${fullName}</h1>
@@ -95,9 +116,11 @@
                     <h4 class="modal-title">Profile edit</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Name</span><input type="text" class="form-control" id="fullName" placeholder="Full name" value="${fullName}">
+                    <span>Name</span><input type="text" class="form-control" id="fullName" placeholder="Full name"
+                                            value="${fullName}">
                     <input type="text" class="form-control" id="city" placeholder="City" value="${city}">
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number" value="${phoneNumber}">
+                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number"
+                           value="${phoneNumber}">
                     <input type="text" class="form-control" id="email" placeholder="Email" value="${email}">
                     <textarea class="form-control" id="about" placeholder="About me">${about}</textarea>
                     <input type="date" class="form-control" id="birthDate" placeholder="Birth date">

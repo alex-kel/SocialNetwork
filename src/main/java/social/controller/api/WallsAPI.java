@@ -6,11 +6,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import social.controller.api.forms.PostForm;
 import social.entity.Post;
 import social.entity.User;
-import social.repository.PostRepository;
+import social.repository.UserRepository;
 import social.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,19 +23,21 @@ import javax.servlet.http.HttpServletResponse;
 public class WallsAPI {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    PostRepository postRepository;
+    private UserRepository userRepository;
 
     @RequestMapping(value = "wall/createPost", method = RequestMethod.POST)
     public void createPost(@RequestBody PostForm postForm,
                            BindingResult result,
                            HttpServletResponse response,
                            HttpServletRequest request) {
-        User owner = userService.getCurrentSessionUser();
-        User author = userService.getUserById(postForm.getAuthor_user_id());
+        User author = userService.getCurrentSessionUser();
+        User owner = userService.getUserById(postForm.getOwner_id());
         Post post = new Post(postForm.getText(), author, owner);
-        postRepository.save(post);
+        author.getAuthoredPosts().add(post);
+        owner.getWallPosts().add(post);
+        userRepository.save(author);
     }
 }

@@ -6,7 +6,7 @@ package social.controller.api.forms;
 public class PostForm {
 
     String text;
-    Long author_user_id, owner_user_id;
+    Long owner_id;
 
     public String getText() {
         return text;
@@ -16,19 +16,11 @@ public class PostForm {
         this.text = text;
     }
 
-    public Long getAuthor_user_id() {
-        return author_user_id;
+    public Long getOwner_id() {
+        return owner_id;
     }
 
-    public void setAuthor_user_id(Long author_user_id) {
-        this.author_user_id = author_user_id;
-    }
-
-    public Long getOwner_user_id() {
-        return owner_user_id;
-    }
-
-    public void setOwner_user_id(Long owner_user_id) {
-        this.owner_user_id = owner_user_id;
+    public void setOwner_id(Long owner_id) {
+        this.owner_id = owner_id;
     }
 }

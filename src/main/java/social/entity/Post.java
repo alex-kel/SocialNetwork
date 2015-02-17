@@ -24,8 +24,8 @@ public class Post {
     @Column(name = "post_id")
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_user_id")
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     public Post(String text, User author, User owner) {
@@ -35,12 +35,8 @@ public class Post {
         this.date = new Date();
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_user_id")
+    @ManyToOne
     private User author;
-
- //   @OneToMany(mappedBy = "post", targetEntity = Like.class)
- //   private Set<Like> likes = new HashSet<>(0);
 
     private String text;
 

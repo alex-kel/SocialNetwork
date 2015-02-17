@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 import social.controller.forms.UserRegistrationForm;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id", length = 6, nullable = false)
     private long id;
 
@@ -30,8 +29,13 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private UserProfile userProfile;
 
-//    @OneToMany(mappedBy = "user")
-//    private Set<Post> posts = new HashSet<Post>(0);
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    private Set<Post> authoredPosts = new HashSet<Post>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private Set<Post> wallPosts = new HashSet<Post>(0);
 
     public User(String login, String password) {
         this.login = login;
@@ -80,5 +84,22 @@ public class User {
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+
+    public Set<Post> getAuthoredPosts() {
+        return authoredPosts;
+    }
+
+    public void setAuthoredPosts(Set<Post> authoredPosts) {
+        this.authoredPosts = authoredPosts;
+    }
+
+    public Set<Post> getWallPosts() {
+        return wallPosts;
+    }
+
+    public void setWallPosts(Set<Post> wallPosts) {
+        this.wallPosts = wallPosts;
     }
 }
