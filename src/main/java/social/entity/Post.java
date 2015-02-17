@@ -42,6 +42,8 @@ public class Post {
 
     private Date date;
 
+    public Post() {
+    }
 
     public long getId() {
         return id;

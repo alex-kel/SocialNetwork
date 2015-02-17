@@ -11,6 +11,7 @@ import social.entity.Post;
 import social.entity.User;
 import social.repository.PostRepository;
 import social.repository.UserRepository;
+import social.service.PostService;
 import social.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class WallsAPI {
     private UserRepository userRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private PostService postService;
 
     @RequestMapping(value = "wall/createPost", method = RequestMethod.POST)
     public void createPost(@RequestBody PostForm postForm,
@@ -42,7 +43,8 @@ public class WallsAPI {
         Post post = new Post(postForm.getText(), author, owner);
         author.getAuthoredPosts().add(post);
         owner.getWallPosts().add(post);
-        postRepository.saveAndFlush(post);
+        author.getAuthoredPosts().add(post);
+        //postService.addPost(post); //there exception
         userRepository.save(author);
         response.setStatus(200);
     }
