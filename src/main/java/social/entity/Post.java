@@ -1,6 +1,9 @@
 package social.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import social.controller.api.forms.PostForm;
+import social.service.UserService;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +17,7 @@ import java.util.Set;
 @Table(name = "Posts")
 public class Post {
 
+
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
@@ -24,16 +28,24 @@ public class Post {
     @JoinColumn(name = "owner_user_id")
     private User owner;
 
+    public Post(String text, User author, User owner) {
+        this.text = text;
+        this.author = author;
+        this.owner = owner;
+        this.date = new Date();
+    }
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_user_id")
     private User author;
 
-    @OneToMany(mappedBy = "post")
-    private Set<Like> likes = new HashSet<>(0);
+ //   @OneToMany(mappedBy = "post", targetEntity = Like.class)
+ //   private Set<Like> likes = new HashSet<>(0);
 
     private String text;
 
     private Date date;
+
 
     public long getId() {
         return id;
@@ -75,11 +87,11 @@ public class Post {
         this.date = date;
     }
 
-    public Set<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Set<Like> likes) {
-        this.likes = likes;
-    }
+//    public Set<Like> getLikes() {
+//        return likes;
+//    }
+//
+//    public void setLikes(Set<Like> likes) {
+//        this.likes = likes;
+//    }
 }

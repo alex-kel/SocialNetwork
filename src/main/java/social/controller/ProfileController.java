@@ -46,7 +46,7 @@ public class ProfileController {
             date = format.parse(profileEditForm.getBirthDate());
         } catch (Exception e) {}
         profile.setBirthDate(date);
-        profile.setEmail(profile.getEmail());
+        profile.setEmail(profileEditForm.getEmail());
         profile.setCity(profileEditForm.getCity());
         profile.setPhoneNumber(profileEditForm.getPhoneNumber());
         userProfileRepository.save(profile);
@@ -90,11 +90,6 @@ public class ProfileController {
     }
 
 
-    @RequestMapping(value = "/profile/wall}", method = RequestMethod.GET)
-    public @ResponseBody
-    Object getWallPosts(@RequestParam(value = "id", required = true) String id) {
-        User user = userService.getUserById(Long.parseLong(id));
-        return null;
-    }
+
 
 }

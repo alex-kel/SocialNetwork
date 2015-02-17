@@ -1,6 +1,7 @@
 social\repository\UserProfileRepository.class
 social\controller\forms\UserRegistrationForm.class
 social\service\Impl\UserServiceImpl.class
+social\controller\api\forms\PostForm.class
 social\repository\UserRepository.class
 social\service\Impl\UserDetailsServiceImpl.class
 social\config\PersistenceConfig.class
@@ -10,6 +11,7 @@ social\config\Initializer.class
 social\entity\Post.class
 social\controller\ProfileController.class
 social\entity\User.class
+social\controller\api\WallsAPI.class
 social\controller\MainController.class
 social\controller\LoginController.class
 social\controller\RegisterController.class
@@ -22,4 +24,6 @@ social\entity\enums\UserRoleEnum.class
 social\service\UserService.class
 social\config\SecurityConfig.class
 social\controller\forms\ProfileEditForm.class
+social\entity\Like.class
+social\repository\LikeRepository.class
 social\entity\UserProfile.class

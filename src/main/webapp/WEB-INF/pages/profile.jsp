@@ -99,7 +99,7 @@
                     <input type="text" class="form-control" id="city" placeholder="City" value="${city}">
                     <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number" value="${phoneNumber}">
                     <input type="text" class="form-control" id="email" placeholder="Email" value="${email}">
-                    <textarea class="form-control" id="about" placeholder="About me" value="${about}"></textarea>
+                    <textarea class="form-control" id="about" placeholder="About me">${about}</textarea>
                     <input type="date" class="form-control" id="birthDate" placeholder="Birth date">
                 </div>
                 <div class="modal-footer">

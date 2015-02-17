@@ -4,6 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 import social.controller.forms.UserRegistrationForm;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Alexander on 12.02.2015.
@@ -26,6 +29,9 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private UserProfile userProfile;
+
+//    @OneToMany(mappedBy = "user")
+//    private Set<Post> posts = new HashSet<Post>(0);
 
     public User(String login, String password) {
         this.login = login;

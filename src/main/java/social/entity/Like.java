@@ -19,8 +19,6 @@ public class Like {
     @JoinColumn(name = "owner_user_id")
     private User owner;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
     private Post post;
 
 
