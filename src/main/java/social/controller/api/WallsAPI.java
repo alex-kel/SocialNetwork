@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import social.controller.api.forms.PostForm;
 import social.entity.Post;
 import social.entity.User;
+import social.repository.PostRepository;
 import social.repository.UserRepository;
 import social.service.UserService;
 
@@ -28,6 +29,9 @@ public class WallsAPI {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @RequestMapping(value = "wall/createPost", method = RequestMethod.POST)
     public void createPost(@RequestBody PostForm postForm,
                            BindingResult result,
@@ -38,6 +42,8 @@ public class WallsAPI {
         Post post = new Post(postForm.getText(), author, owner);
         author.getAuthoredPosts().add(post);
         owner.getWallPosts().add(post);
+        postRepository.saveAndFlush(post);
         userRepository.save(author);
+        response.setStatus(200);
     }
 }
