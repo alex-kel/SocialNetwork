@@ -3,9 +3,7 @@ package social.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import social.controller.api.forms.PostForm;
 import social.entity.Post;
 import social.entity.User;
@@ -44,8 +42,14 @@ public class WallsAPI {
         author.getAuthoredPosts().add(post);
         owner.getWallPosts().add(post);
         author.getAuthoredPosts().add(post);
-        //postService.addPost(post); //there exception
         userRepository.save(author);
         response.setStatus(200);
+    }
+
+    @RequestMapping(value = "wall/getPosts", method = RequestMethod.GET)
+    private
+    @ResponseBody
+    Object getAllPosts(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response) {
+        return new Object();
     }
 }
