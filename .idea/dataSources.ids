@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="dataSourceStorage">
-  <data-source name="PostgreSQL - social@localhost" uuid="54e69bab-8de6-447c-9f71-9e9c8643b19b">
-    <database-info product="PostgreSQL" version="9.4.1" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.3 JDBC4 (build 1100)">
-      <identifier-quote-string>&quot;</identifier-quote-string>
-    </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
-  </data-source>
-</component>
