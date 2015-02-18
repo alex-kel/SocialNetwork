@@ -5,7 +5,12 @@ $(document).ready(function () {
 
     $(".edit-profile").click(function (event) {
         event.preventDefault();
-        $(".modal").modal('show');
+        $(".profileModal").modal('show');
+    });
+
+    $(".change-avatar").click(function(event) {
+        event.preventDefault();
+        $(".avatarModal").modal('show');
     });
 
     $(".save").click(function () {

@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
 
-    var postCode = "<div class=\"post col-md-12\"> "+
+    var postCode = "<div class=\"post col-md-12\"> " +
             " <div class=\"post-author\"></div> " +
             "<div class=\"post-text\"></div> " +
             "<div class=\"post-info\"> <p class=\"date\"></p> " +
@@ -32,7 +32,7 @@
 
     $(document).ready(function () {
         $(".postbtn").prop('disabled', true);
-        $(".wall-post").keyup(function() {
+        $(".wall-post").keyup(function () {
             if ($(this).val().length == 0) {
                 $(".postbtn").prop('disabled', true);
             } else {
@@ -92,6 +92,7 @@
         <h1>${fullName}</h1>
         <c:if test="${editable}">
             <a class="edit-profile" href="#">Edit profie</a>
+            <a class="change-avatar" href="#" style="margin-left: 10px">New profile photo</a>
         </c:if>
         <hr>
         <div class="row">
@@ -141,8 +142,9 @@
         </div>
     </div>
 </div>
+
 <c:if test="${editable}">
-    <div class="modal fade">
+    <div class="modal fade profileModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -151,25 +153,48 @@
                     <h4 class="modal-title">Profile edit</h4>
                 </div>
                 <div class="modal-body">
-                    <span>Name</span><input type="text" class="form-control" id="fullName" placeholder="Full name"
-                                            value="${fullName}">
-                    <input type="text" class="form-control" id="city" placeholder="City" value="${city}">
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number"
-                           value="${phoneNumber}">
-                    <input type="text" class="form-control" id="email" placeholder="Email" value="${email}">
-                    <textarea class="form-control" id="about" placeholder="About me">${about}</textarea>
-                    <input type="date" class="form-control" id="birthDate" placeholder="Birth date">
+                    <span>Name:</span><input type="text" class="form-control" id="fullName" placeholder="Full name"
+                                             value="${fullName}">
+                    <span>City:</span><input type="text" class="form-control" id="city" placeholder="City"
+                                             value="${city}">
+                    <span>Phone number:</span><input type="text" class="form-control" id="phoneNumber"
+                                                     placeholder="Phone number"
+                                                     value="${phoneNumber}">
+                    <span>Email:</span><input type="text" class="form-control" id="email" placeholder="Email"
+                                              value="${email}">
+                    <span>Some information about you:</span><textarea class="form-control" id="about"
+                                                                      placeholder="About me">${about}</textarea>
+                    <span>Birth date:</span><input type="date" class="form-control" id="birthDate"
+                                                   placeholder="Birth date">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary save">Save changes</button>
                 </div>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+    <div class="modal fade avatarModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New profile photo</h4>
+                </div>
+                <div class="modal-body"><form>
+                                <span class="file-input btn btn-primary btn-file">
+                Browse&hellip; <input type="file" id="newAvatar">
+            </span>
+                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary upload">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </c:if>
 </body>
 </html>

@@ -60,6 +60,7 @@ public class WallsAPI {
     Object getAllPosts(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response) {
         Gson gson = gsonService.standardBuilder();
         List<Post> posts = postService.getAllPostsByOwner(id);
+        response.setStatus(200);
         return gson.toJson(posts);
     }
 }
