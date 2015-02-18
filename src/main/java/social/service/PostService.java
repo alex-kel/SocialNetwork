@@ -12,4 +12,5 @@ public interface PostService {
 
     Post addPost(Post post);
     List<Post> getAllPostsByOwner(Long id);
+    Post getPostById(Long id);
 }

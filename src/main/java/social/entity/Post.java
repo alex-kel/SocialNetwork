@@ -22,7 +22,7 @@ public class Post {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
-    @Column(name = "post_id")
+    @Column(name = "id")
     @Expose
     private long id;
 
@@ -42,10 +42,16 @@ public class Post {
     private User author;
 
     @Expose
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @Expose
     private Date date;
+
+    @Expose
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    private Set<Like> likes;
 
     public Post() {
     }
@@ -90,11 +96,11 @@ public class Post {
         this.date = date;
     }
 
-//    public Set<Like> getLikes() {
-//        return likes;
-//    }
-//
-//    public void setLikes(Set<Like> likes) {
-//        this.likes = likes;
-//    }
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
 }

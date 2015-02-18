@@ -32,4 +32,9 @@ public class PostSerivceImpl implements PostService {
     public List<Post> getAllPostsByOwner(Long id) {
         return postRepository.findAllByIdOwner(userService.getUserById(id));
     }
+
+    @Override
+    public Post getPostById(Long id) {
+        return postRepository.findOne(id);
+    }
 }

@@ -37,6 +37,7 @@ public class WallsAPI {
     @Autowired
     private PostService postService;
 
+
     @RequestMapping(value = "wall/createPost", method = RequestMethod.POST)
     public @ResponseBody Object createPost(@RequestBody PostForm postForm,
                            BindingResult result,
@@ -63,4 +64,5 @@ public class WallsAPI {
         response.setStatus(200);
         return gson.toJson(posts);
     }
+
 }

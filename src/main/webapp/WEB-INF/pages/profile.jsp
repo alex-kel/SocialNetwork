@@ -25,10 +25,10 @@
 
     var postCode = "<div class=\"post col-md-12\"> " +
             " <div class=\"post-author\"></div> " +
-            "<div class=\"post-text\"></div> " +
+            "<div class=\"post-text\" style='word-wrap: break-word'></div> " +
             "<div class=\"post-info\"> <p class=\"date\"></p> " +
             "<div class=\"like\"> <img src=\"/resources/img/like.png\">" +
-            "<span class=\"like-count\"></span> </div> </div> </div>";
+            "<span class=\"like-count\"></span> </div> </div><hr style='margin-top: 50px'></div>";
 
     $(document).ready(function () {
         $(".postbtn").prop('disabled', true);
@@ -54,7 +54,7 @@
                     data = JSON.parse(data);
                     addPost(data);
                     $(".wall-post").val("");
-                    $(".postbtn").disabled(true);
+                    $(".postbtn").prop('disabled', true);
                 }
             });
         });
@@ -97,12 +97,14 @@
         <hr>
         <div class="row">
             <!-- left column -->
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="text-center">
                     <img src="${avatarRef}" class="avatar"
                          alt="avatar">
-                    <button type="button" class="btn btn-success">Follow</button>
-                    <button type="button" class="btn btn-primary">Send Message</button>
+                    <c:if test="${!editable}">
+                        <button type="button" class="btn btn-success">Follow</button>
+                        <button type="button" class="btn btn-primary">Send Message</button>
+                    </c:if>
                 </div>
             </div>
             <div class="col-md-3 col-lg-offset-1 personal-info">
@@ -182,11 +184,12 @@
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">New profile photo</h4>
                 </div>
-                <div class="modal-body"><form>
+                <div class="modal-body">
+                    <form>
                                 <span class="file-input btn btn-primary btn-file">
                 Browse&hellip; <input type="file" id="newAvatar">
             </span>
-                </form>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

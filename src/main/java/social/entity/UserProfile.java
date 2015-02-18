@@ -18,7 +18,6 @@ public class UserProfile {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
-    @Column(name = "user_profile_id")
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
