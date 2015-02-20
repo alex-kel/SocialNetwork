@@ -6,8 +6,6 @@
             <li role="presentation" id="1"><a href="/myprofile">My profile</a></li>
             <li role="presentation" id="2"><a href="#"> My Friends</a></li>
             <li role="presentation" id="3"><a href="#">My Messages</a></li>
-            <li role="presentation" id="4"><a href="#">My News</a></li>
-            <li role="presentation" id="5"><a href="#">My Photos</a></li>
         </ul>
 
         <ul style="float: right" class="nav nav-pills">

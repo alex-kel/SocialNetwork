@@ -1,25 +1,53 @@
 /**
  * Created by Alexander on 15.02.2015.
  */
+var isHiden = true;
+
 $(document).ready(function () {
 
-    $.ajax("/photos/getAll", {
-        type: 'GET',
-        success: function(data) {
-            data = JSON.parse(data);
-            var imgPattern = "<img class=\"photo-small img-thumbnail\">"
-            for (var i = 0; i < data.length; i++) {
-                var newImg = $('<div/>').html(imgPattern).contents();
-                newImg.attr("src", data[i].ref);
-                $(".photos").append(newImg);
-            }
-        }
+    var currentPhoto;
 
-    });
 
     $(".photos").on("click", "img", function() {
         $(".bigPhoto").attr("src", $(this).attr("src"));
-        $(".photoModal").modal('show');
+        if (isHiden) {
+            $(".photoModal").modal('show');
+            isHiden = false;
+        }
+        currentPhoto = $(this);
+
+
+
+    });
+
+    $(".next").click(function () {
+        var next;
+        var allNext = currentPhoto.nextAll("img");
+        if (allNext.length > 0) {
+            next = $(allNext[0]);
+            next.click();
+        } else {
+            var sib = currentPhoto.siblings("img");
+            if (sib.length > 0) {
+                next = $(sib[0]);
+                next.click();
+            }
+        }
+    });
+
+    $(".prev").click(function () {
+        var prev;
+        var allPrev = currentPhoto.prevAll("img");
+        if (allPrev.length > 0) {
+            prev = $(allPrev[0]);
+            prev.click();
+        } else {
+            var sib = currentPhoto.siblings("img");
+            if (sib.length > 0) {
+                prev = $(sib[sib.length - 1]);
+                prev.click();
+            }
+        }
     });
 
     $(".edit-profile").click(function (event) {
@@ -115,4 +143,8 @@ function readURL(input) {
 
 function uploadModal(event) {
     $(".uploadPhoto").modal('show');
+}
+
+function clearFlag() {
+    isHiden = true;
 }

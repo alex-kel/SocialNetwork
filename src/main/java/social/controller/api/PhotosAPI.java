@@ -42,8 +42,8 @@ public class PhotosAPI {
     private GsonService gsonService;
 
     @RequestMapping(value = "photos/getAll", method = RequestMethod.GET)
-    public @ResponseBody Object getAllPhotos() {
-        User user = userService.getCurrentSessionUser();
+    public @ResponseBody Object getAllPhotos(@RequestParam Long id) {
+        User user = userService.getUserById(id);
         List<Photo> allPhotos = photoRepository.getAllPhotosByUser(user);
         Gson gson = gsonService.standardBuilder();
         return gson.toJson(allPhotos);

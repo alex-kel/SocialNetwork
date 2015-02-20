@@ -32,6 +32,21 @@
 
     $(document).ready(function () {
 
+        $.ajax("/photos/getAll", {
+            type: 'GET',
+            data: {"id" : '${id}'},
+            success: function(data) {
+                data = JSON.parse(data);
+                var imgPattern = "<img class=\"photo-small img-thumbnail\">"
+                for (var i = 0; i < data.length; i++) {
+                    var newImg = $('<div/>').html(imgPattern).contents();
+                    newImg.attr("src", data[i].ref);
+                    $(".photos").append(newImg);
+                }
+            }
+
+        });
+
         $(".postbtn").prop('disabled', true);
         $(".wall-post").keyup(function () {
             if ($(this).val().length == 0) {
@@ -116,7 +131,7 @@
             <div class="col-md-6">
                 <div class="col-md-6">
                     <div class="text-center">
-                        <img src="${avatarRef}"  style="width: 250px; height: 330px;" class="avatar img-thumbnail"
+                        <img src="${avatarRef}" style="width: 250px; height: 330px;" class="avatar img-thumbnail"
                              alt="avatar">
                         <sec:authorize access="isAuthenticated()">
                             <c:if test="${!editable}">
@@ -153,7 +168,7 @@
                 </div>
                 <div class="photos col-md-12">
                     <h1>Photos</h1>
-                    <a href="#" onclick="uploadModal()">Upload a new photo to album</a>
+                    <c:if test="${editable}"><a href="#" onclick="uploadModal()">Upload a new photo to album</a></c:if>
                     <hr>
 
                 </div>
@@ -217,7 +232,8 @@
                                 <span class="file-input btn btn-primary btn-file">
                 Browse&hellip; <input type="file" name="file" id="newAvatar" onchange="readURL(this);">
             </span>
-                        <img class="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
+                        <img class="preview"
+                             style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
                              src="#" alt="your image"/>
                     </form>
                 </div>
@@ -242,7 +258,8 @@
                                 <span class="file-input btn btn-primary btn-file">
                 Browse&hellip; <input type="file" name="file" id="newPhoto" onchange="readURL(this);">
             </span>
-                        <img class="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
+                        <img class="preview"
+                             style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
                              src="#" alt="your image"/>
                     </form>
                 </div>
@@ -259,7 +276,7 @@
     <div class="modal-dialog" style="display: inline-block; width: 100%">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                <button type="button" class="close" data-dismiss="modal" onclick="clearFlag()" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Photos</h4>
             </div>
@@ -267,7 +284,9 @@
                 <img class="bigPhoto" style="margin: auto; display: block">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary prev">Prev</button>
+                <button type="button" class="btn btn-primary next">Next</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearFlag()">Close</button>
             </div>
         </div>
     </div>
