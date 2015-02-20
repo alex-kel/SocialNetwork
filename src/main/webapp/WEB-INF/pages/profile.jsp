@@ -116,7 +116,7 @@
             <div class="col-md-6">
                 <div class="col-md-6">
                     <div class="text-center">
-                        <img src="${avatarRef}" class="avatar"
+                        <img src="${avatarRef}"  style="width: 250px; height: 330px;" class="avatar img-thumbnail"
                              alt="avatar">
                         <sec:authorize access="isAuthenticated()">
                             <c:if test="${!editable}">
@@ -153,23 +153,8 @@
                 </div>
                 <div class="photos col-md-12">
                     <h1>Photos</h1>
-                    <a href="#">Upload a new photo to album</a>
+                    <a href="#" onclick="uploadModal()">Upload a new photo to album</a>
                     <hr>
-
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
-                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
-                         style="height: 100px; width: 100px" >
 
                 </div>
             </div>
@@ -232,7 +217,7 @@
                                 <span class="file-input btn btn-primary btn-file">
                 Browse&hellip; <input type="file" name="file" id="newAvatar" onchange="readURL(this);">
             </span>
-                        <img id="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
+                        <img class="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
                              src="#" alt="your image"/>
                     </form>
                 </div>
@@ -243,10 +228,35 @@
             </div>
         </div>
     </div>
+    <div class="modal fade uploadPhoto">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New album photo</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data"
+                          action="/photos/upload" id="photo-form">
+                                <span class="file-input btn btn-primary btn-file">
+                Browse&hellip; <input type="file" name="file" id="newPhoto" onchange="readURL(this);">
+            </span>
+                        <img class="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
+                             src="#" alt="your image"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="uploadPhoto()" class="btn btn-primary upload">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </c:if>
 
 <div class="modal fade photoModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="display: inline-block; width: 100%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span

@@ -23,7 +23,7 @@ input {
     margin-right: auto;
 }
 
-.btn-container{
+.btn-container {
     padding-top: 70px;
 }
 
@@ -70,7 +70,7 @@ input {
 }
 
 .post-author {
-    color : #2B587A;
+    color: #2B587A;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -99,6 +99,7 @@ input {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -112,4 +113,9 @@ input {
     background: red;
     cursor: inherit;
     display: block;
+}
+
+.photo-small {
+    height: 100px;
+    width: 100px;
 }

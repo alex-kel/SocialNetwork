@@ -52,7 +52,7 @@ public class Post {
     @Expose
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name = "post_id")
-    private Set<Like> likes;
+    private Set<Like> likes = new HashSet<Like>(0);;
 
     public Post() {
     }

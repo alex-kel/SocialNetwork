@@ -49,7 +49,7 @@ public class UserProfile {
         this.phoneNumber = "";
         this.about = "";
         this.email = "";
-        this.avatarRef = "/resources/img/defaultAvatar.gif";
+        this.avatarRef = "/resources/img/no_avatar.png";
     }
 
     public String getAvatarRef() {

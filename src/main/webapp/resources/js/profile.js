@@ -3,7 +3,21 @@
  */
 $(document).ready(function () {
 
-    $(".photo").click(function() {
+    $.ajax("/photos/getAll", {
+        type: 'GET',
+        success: function(data) {
+            data = JSON.parse(data);
+            var imgPattern = "<img class=\"photo-small img-thumbnail\">"
+            for (var i = 0; i < data.length; i++) {
+                var newImg = $('<div/>').html(imgPattern).contents();
+                newImg.attr("src", data[i].ref);
+                $(".photos").append(newImg);
+            }
+        }
+
+    });
+
+    $(".photos").on("click", "img", function() {
         $(".bigPhoto").attr("src", $(this).attr("src"));
         $(".photoModal").modal('show');
     });
@@ -82,10 +96,14 @@ function uploadAvatar() {
     $("#avatar-form").submit();
 }
 
+function uploadPhoto() {
+    $("#photo-form").submit();
+}
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        $("#preview").css("display", "block");
+        $(".preview").css("display", "block");
         reader.onload = function (e) {
             $('#preview')
                 .attr('src', e.target.result)
@@ -93,4 +111,8 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function uploadModal(event) {
+    $(".uploadPhoto").modal('show');
 }
