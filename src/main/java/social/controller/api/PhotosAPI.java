@@ -121,7 +121,7 @@ public class PhotosAPI {
         return "unliked";
     }
 
-    @RequestMapping(value = "photos/likeCount")
+    @RequestMapping(value = "photos/likeCount", method = RequestMethod.GET)
     private
     @ResponseBody
     Object likeCount(@RequestParam long id) {
@@ -129,7 +129,7 @@ public class PhotosAPI {
         return photoLikeRepository.allLikes(photo).size();
     }
 
-    @RequestMapping(value = "photos/isLiked")
+    @RequestMapping(value = "photos/isLiked", method = RequestMethod.POST)
     private
     @ResponseBody
     Object isLiked(@RequestParam long id) {

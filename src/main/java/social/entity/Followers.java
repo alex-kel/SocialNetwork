@@ -8,8 +8,8 @@ import javax.persistence.*;
  * Created by Alexander on 20.02.2015.
  */
 @Entity
-@Table(name = "photo_likes")
-public class PhotoLike {
+@Table(name = "followers")
+public class Followers {
 
     @Id
     @GeneratedValue(generator="increment")
@@ -18,11 +18,10 @@ public class PhotoLike {
     private long id;
 
     @OneToOne
-    private User owner;
+    private User follower;
 
     @OneToOne
-    private Photo photo;
-
+    private User target;
 
     public long getId() {
         return id;
@@ -32,19 +31,19 @@ public class PhotoLike {
         this.id = id;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getFollower() {
+        return follower;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setFollower(User follower) {
+        this.follower = follower;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public User getTarget() {
+        return target;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setTarget(User target) {
+        this.target = target;
     }
 }

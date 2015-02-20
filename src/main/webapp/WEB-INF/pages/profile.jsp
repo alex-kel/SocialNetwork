@@ -286,6 +286,7 @@
             </div>
             <div class="modal-footer">
                 <a style='float: left' class="btn btn-default btn-md like-photo"><span class="glyphicon glyphicon-thumbs-up"></span> LIke</a>
+                <span class="like-count" style="float: left; margin-top: 7px; margin-left: 10px"></span>
                 <button type="button" class="btn btn-primary prev">Prev</button>
                 <button type="button" class="btn btn-primary next">Next</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearFlag()">Close</button>

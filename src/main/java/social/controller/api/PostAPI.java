@@ -43,8 +43,6 @@ public class PostAPI {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private EntityManagerFactory em;
 
     @RequestMapping(value = "post/changeLikeState", method = RequestMethod.POST)
     private

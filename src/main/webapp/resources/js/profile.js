@@ -6,18 +6,47 @@ var isHiden = true;
 $(document).ready(function () {
 
     var currentPhoto;
+    var photoId;
+    var likeCount;
 
+    $(".photos").on("click", "img", function () {
+        $(".bigPhoto").attr("src", $(this).attr("src")).css({"height": "400px"});
+        var lastClass = $(this).attr('class').split(' ').pop();
+        photoId = lastClass;
+        $.ajax("/photos/likeCount", {
+            type: "GET",
+            data: {"id": lastClass},
+            success: function (data) {
+                likeCount = data;
+                $(".like-count").text(data.toString());
+            }
+        });
+        $.post("/photos/isLiked", {"id": photoId}, function (data) {
+            if (data) {
+                $(".like-photo").addClass("btn-primary");
+            } else {
+                $(".like-photo").removeClass("btn-primary");
+            }
+        });
 
-    $(".photos").on("click", "img", function() {
-        $(".bigPhoto").attr("src", $(this).attr("src"));
         if (isHiden) {
             $(".photoModal").modal('show');
             isHiden = false;
         }
         currentPhoto = $(this);
+    });
 
-
-
+    $(".like-photo").click(function () {
+        $.post("/photos/changeLike", {"id": photoId}, function (data) {
+            $(".like-photo").toggleClass("btn-primary");
+            if (data === "liked") {
+                likeCount += 1;
+                $(".like-count").text((parseInt(likeCount)).toString());
+            } else {
+                likeCount -= 1;
+                $(".like-count").text(likeCount).toString();
+            }
+        })
     });
 
     $(".next").click(function () {
@@ -74,15 +103,15 @@ $(document).ready(function () {
                 }
             })
         })
-        .on("click", ".del", function() {
+        .on("click", ".del", function () {
             var btn = $(this);
             var post = btn.closest(".post");
             var postId = post.attr("class").split(' ').pop();
-            $.post("/post/deletePost", {"id" : postId}, function(data) {
+            $.post("/post/deletePost", {"id": postId}, function (data) {
                 if ("deleted" != data) {
                     alert(data);
                 } else {
-                    post.fadeOut(500, function() {
+                    post.fadeOut(500, function () {
                         post.remove();
                     });
                 }
@@ -114,7 +143,8 @@ $(document).ready(function () {
             }
         });
     });
-});
+})
+;
 
 function setActive() {
     $(".navigation").find("#1").addClass("active");
