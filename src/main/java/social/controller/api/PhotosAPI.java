@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import social.entity.Photo;
+import social.entity.PhotoLike;
 import social.entity.User;
+import social.repository.PhotoLikeRepository;
 import social.repository.PhotoRepository;
 import social.service.UserService;
 import social.service.gson.GsonService;
@@ -39,15 +41,21 @@ public class PhotosAPI {
     private PhotoRepository photoRepository;
 
     @Autowired
+    private PhotoLikeRepository photoLikeRepository;
+
+    @Autowired
     private GsonService gsonService;
 
     @RequestMapping(value = "photos/getAll", method = RequestMethod.GET)
-    public @ResponseBody Object getAllPhotos(@RequestParam Long id) {
+    public
+    @ResponseBody
+    Object getAllPhotos(@RequestParam Long id) {
         User user = userService.getUserById(id);
         List<Photo> allPhotos = photoRepository.getAllPhotosByUser(user);
         Gson gson = gsonService.standardBuilder();
         return gson.toJson(allPhotos);
     }
+
 
     @RequestMapping(value = "photos/upload", method = RequestMethod.POST)
     public String uploadPhoto(@RequestParam MultipartFile file) {
@@ -68,7 +76,7 @@ public class PhotosAPI {
                 stream.write(bytes);
                 stream.close();
                 String temp = "C:\\Development\\SocialNetwork\\src\\main\\webapp";
-                String forCopy =  temp + afterRoot;
+                String forCopy = temp + afterRoot;
                 if (!Files.exists(Paths.get(temp + relativeFolder)))
                     Files.createDirectories(Paths.get(temp + relativeFolder));
                 BufferedOutputStream streamCopy =
@@ -91,4 +99,44 @@ public class PhotosAPI {
         String format = name.substring(name.lastIndexOf('.'));
         return (new java.util.Date()).getTime() + format;
     }
+
+
+    @RequestMapping(value = "photos/changeLike")
+    private
+    @ResponseBody
+    Object changeLike(@RequestParam long id) {
+        User user = userService.getCurrentSessionUser();
+        Photo photo = photoRepository.findOne(id);
+        PhotoLike like = photoLikeRepository.getLike(user, photo);
+        if (like == null) {
+            PhotoLike photoLike = new PhotoLike();
+            photoLike.setOwner(userService.getCurrentSessionUser());
+            photoLike.setPhoto(photoRepository.findOne(id));
+            photoLikeRepository.save(photoLike);
+            return "liked";
+        }
+
+        photoLikeRepository.delete(like);
+
+        return "unliked";
+    }
+
+    @RequestMapping(value = "photos/likeCount")
+    private
+    @ResponseBody
+    Object likeCount(@RequestParam long id) {
+        Photo photo = photoRepository.findOne(id);
+        return photoLikeRepository.allLikes(photo).size();
+    }
+
+    @RequestMapping(value = "photos/isLiked")
+    private
+    @ResponseBody
+    Object isLiked(@RequestParam long id) {
+        Photo photo = photoRepository.findOne(id);
+        User user = userService.getCurrentSessionUser();
+        return photoLikeRepository.getLike(user, photo) != null;
+    }
+
+
 }
