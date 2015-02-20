@@ -45,7 +45,6 @@ public class DataConfig {
         dataSource.setUrl("jdbc:postgresql://localhost:5432/social");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
-
         return dataSource;
     }
 

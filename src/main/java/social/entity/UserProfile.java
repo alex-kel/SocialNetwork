@@ -45,7 +45,7 @@ public class UserProfile {
     public UserProfile() {
         this.city = "";
         this.fullName = "";
-        this.birthDate = new Date();
+        this.birthDate = null;
         this.phoneNumber = "";
         this.about = "";
         this.email = "";

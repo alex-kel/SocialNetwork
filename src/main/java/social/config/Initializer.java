@@ -9,20 +9,18 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.Filter;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
+import java.io.File;
 
 /**
  * Created by Alexander on 12.02.2015.
  */
-public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer{
+public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
 
 
@@ -35,7 +33,21 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] {WebAppConfig.class };
+        return new Class<?>[]{WebAppConfig.class};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        String path = "/resources/tmp/";
+        File dirPath = new File(path);
+        if (!dirPath.exists()) {
+            dirPath.mkdirs();
+        }
+        MultipartConfigElement multipartConfigElement =
+                new MultipartConfigElement(dirPath.getAbsolutePath(),
+                        10 * 1024 * 1024, 10 * 1024 * 1024 * 2, 10 * 1024 * 1024 / 2);
+
+        registration.setMultipartConfig(multipartConfigElement);
     }
 
     @Override

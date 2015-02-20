@@ -39,6 +39,7 @@ public class Post {
 
     @Expose
     @ManyToOne
+    @JoinColumn(name = "author_id")
     private User author;
 
     @Expose
@@ -49,7 +50,7 @@ public class Post {
     private Date date;
 
     @Expose
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @JoinColumn(name = "post_id")
     private Set<Like> likes;
 

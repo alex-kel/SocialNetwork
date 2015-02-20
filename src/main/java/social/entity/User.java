@@ -20,6 +20,7 @@ public class User {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id", length = 6, nullable = false)
+    @Expose
     private long id;
 
     @Column
@@ -33,17 +34,15 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private UserProfile userProfile;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id")
-    private Set<Post> authoredPosts = new HashSet<Post>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<Post> authoredPosts = new HashSet<Post>(0);
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Post> wallPosts = new HashSet<Post>(0);
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
-    private Set<User> followers;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id")
+//    private Set<User> followers;
 
     public User(String login, String password) {
         this.login = login;
@@ -111,13 +110,13 @@ public class User {
         this.wallPosts = wallPosts;
     }
 
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
-    }
+//    public Set<User> getFollowers() {
+//        return followers;
+//    }
+//
+//    public void setFollowers(Set<User> followers) {
+//        this.followers = followers;
+//    }
 
     @Override
     public boolean equals(Object obj) {

@@ -24,13 +24,14 @@
 <script type="text/javascript">
 
     var postCode = "<div class=\"post col-md-12\"> " +
-            " <div class=\"post-author\"></div> " +
+            " <div><span class=\"post-author\"></span><a style='float: right' class=\"btn btn-xs btn-default del\"><span class=\"glyphicon glyphicon-remove\"></span> </a></div>" +
             "<div class=\"post-text\" style='word-wrap: break-word'></div> " +
             "<div class=\"post-info\"> <p class=\"date\"></p> " +
-            "<div class=\"like\"> <img src=\"/resources/img/like.png\">" +
-            "<span class=\"like-count\"></span> </div> </div><hr style='margin-top: 50px'></div>";
+            "<a style='float: right' class=\"btn btn-default btn-xs like-btn\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> LIke</a>" +
+            "</div> <hr style='margin-top: 60px'></div></div>";
 
     $(document).ready(function () {
+
         $(".postbtn").prop('disabled', true);
         $(".wall-post").keyup(function () {
             if ($(this).val().length == 0) {
@@ -75,12 +76,27 @@
             var author = data.author.details.fullName;
             var text = data.text;
             var date = data.date;
+            var likeCount = 0;
+            try {
+                likeCount = data.likes.length;
+            } catch (err) {
+            }
+            var isLiked = false;
+            for (var i = 0; i < likeCount; i++) {
+                if (data.likes[i].owner.id === ${sessionId}) {
+                    isLiked = true;
+                }
+            }
             var newPost = $('<div/>').html(postCode).contents();
             newPost.hide();
             newPost.addClass(id.toString());
             newPost.find(".post-author").text(author);
             newPost.find(".post-text").text(text);
             newPost.find(".date").text(date);
+            newPost.find(".like-btn").text("Like " + likeCount);
+            if (isLiked) {
+                newPost.find(".like-btn").addClass("btn-primary");
+            }
             $(".posts").prepend(newPost);
             newPost.fadeIn(500);
         }
@@ -97,51 +113,77 @@
         <hr>
         <div class="row">
             <!-- left column -->
-            <div class="col-md-3">
-                <div class="text-center">
-                    <img src="${avatarRef}" class="avatar"
-                         alt="avatar">
-                    <c:if test="${!editable}">
-                        <button type="button" class="btn btn-success">Follow</button>
-                        <button type="button" class="btn btn-primary">Send Message</button>
-                    </c:if>
+            <div class="col-md-6">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <img src="${avatarRef}" class="avatar"
+                             alt="avatar">
+                        <sec:authorize access="isAuthenticated()">
+                            <c:if test="${!editable}">
+                                <button type="button" class="btn btn-success">Follow</button>
+                                <button type="button" class="btn btn-primary">Send Message</button>
+                            </c:if></sec:authorize>
+                    </div>
+                </div>
+                <div class="col-md-6 personal-info">
+                    <label class="profile_info">Full name:</label>
+                    <label class="profile_content fullName">${fullName}</label>
+                    <hr>
+                    <br>
+                    <label class="profile_info">Email:</label>
+                    <label class="profile_content email">${email}</label>
+                    <br>
+                    <hr>
+                    <label class="profile_info">City:</label>
+                    <label class="profile_content city">${city}</label>
+                    <br>
+                    <hr>
+                    <label class="profile_info">Birth Date</label>
+                    <label class="profile_content birthDate">${birthDate}</label>
+                    <br>
+                    <hr>
+                    <label class="profile_info">Phone number:</label>
+                    <label class="profile_content phoneNumber">${phoneNumber}</label>
+                    <br>
+                    <hr>
+                    <label class="profile_info">About me:</label>
+                    <label class="profile_content about">${about}</label>
+                    <br>
+                    <hr>
+                </div>
+                <div class="photos col-md-12">
+                    <h1>Photos</h1>
+                    <a href="#">Upload a new photo to album</a>
+                    <hr>
+
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+                    <img class="photo img-thumbnail" src="https://pp.vk.me/c618722/v618722210/37ab/dQWwJEbhMRg.jpg"
+                         style="height: 100px; width: 100px" >
+
                 </div>
             </div>
-            <div class="col-md-3 col-lg-offset-1 personal-info">
-                <label class="profile_info">Full name:</label>
-                <label class="profile_content fullName">${fullName}</label>
-                <hr>
-                <br>
-                <label class="profile_info">Email:</label>
-                <label class="profile_content email">${email}</label>
-                <br>
-                <hr>
-                <label class="profile_info">City:</label>
-                <label class="profile_content city">${city}</label>
-                <br>
-                <hr>
-                <label class="profile_info">Birth Date</label>
-                <label class="profile_content birthDate">${birthDate}</label>
-                <br>
-                <hr>
-                <label class="profile_info">Phone number:</label>
-                <label class="profile_content phoneNumber">${phoneNumber}</label>
-                <br>
-                <hr>
-                <label class="profile_info">About me:</label>
-                <label class="profile_content about">${about}</label>
-                <br>
-                <hr>
-            </div>
-
-            <div class="col-md-4 col-lg-offset-1 wall">
+            <div class="col-md-5 col-md-offset-1 wall">
                 <textarea class="form-control wall-post" rows="3"></textarea>
                 <button type="button" class="btn btn-primary postbtn" style="float: right">Post</button>
                 <div class="posts">
 
                 </div>
             </div>
+
+
         </div>
+
     </div>
 </div>
 
@@ -185,19 +227,40 @@
                     <h4 class="modal-title">New profile photo</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" enctype="multipart/form-data"
+                          action="/uploadAvatar" id="avatar-form">
                                 <span class="file-input btn btn-primary btn-file">
-                Browse&hellip; <input type="file" id="newAvatar">
+                Browse&hellip; <input type="file" name="file" id="newAvatar" onchange="readURL(this);">
             </span>
+                        <img id="preview" style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
+                             src="#" alt="your image"/>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary upload">Upload</button>
+                    <button type="button" onclick="uploadAvatar()" class="btn btn-primary upload">Upload</button>
                 </div>
             </div>
         </div>
     </div>
 </c:if>
+
+<div class="modal fade photoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Photos</h4>
+            </div>
+            <div class="modal-body">
+                <img class="bigPhoto" style="margin: auto; display: block">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

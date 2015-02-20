@@ -37,6 +37,9 @@ public class WallsAPI {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private PostRepository postRepository;
+
 
     @RequestMapping(value = "wall/createPost", method = RequestMethod.POST)
     public @ResponseBody Object createPost(@RequestBody PostForm postForm,
@@ -47,12 +50,10 @@ public class WallsAPI {
         User owner = userService.getUserById(postForm.getOwner_id());
         Post post = new Post(postForm.getText(), author, owner);
         author.getAuthoredPosts().add(post);
-        owner.getWallPosts().add(post);
-        author.getAuthoredPosts().add(post);
-        userRepository.save(author);
+        Post savedPost = postRepository.save(post);
         Gson gson = gsonService.standardBuilder();
         response.setStatus(200);
-        return gson.toJson(post);
+        return gson.toJson(savedPost);
     }
 
     @RequestMapping(value = "wall/getPosts", method = RequestMethod.GET)

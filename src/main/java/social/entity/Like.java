@@ -19,7 +19,7 @@ public class Like {
     private long id;
 
     @Expose
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_user_id")
     private User owner;
 

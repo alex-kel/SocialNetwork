@@ -3,15 +3,50 @@
  */
 $(document).ready(function () {
 
+    $(".photo").click(function() {
+        $(".bigPhoto").attr("src", $(this).attr("src"));
+        $(".photoModal").modal('show');
+    });
+
     $(".edit-profile").click(function (event) {
         event.preventDefault();
         $(".profileModal").modal('show');
     });
 
-    $(".change-avatar").click(function(event) {
+    $(".change-avatar").click(function (event) {
         event.preventDefault();
         $(".avatarModal").modal('show');
     });
+
+    $(".wall")
+        .on("click", ".like-btn", function () {
+            var btn = $(this);
+            var post = btn.closest(".post");
+            var postId = post.attr("class").split(' ').pop();
+            $.post("/post/changeLikeState", {"id": postId}, function (data) {
+                btn.toggleClass("btn-primary");
+                if (data === "liked") {
+                    btn.text("Like " + (parseInt(btn.text().split(' ').pop()) + 1));
+                } else {
+                    btn.text("Like " + (btn.text().split(' ').pop() - 1));
+                }
+            })
+        })
+        .on("click", ".del", function() {
+            var btn = $(this);
+            var post = btn.closest(".post");
+            var postId = post.attr("class").split(' ').pop();
+            $.post("/post/deletePost", {"id" : postId}, function(data) {
+                if ("deleted" != data) {
+                    alert(data);
+                } else {
+                    post.fadeOut(500, function() {
+                        post.remove();
+                    });
+                }
+            })
+        });
+
 
     $(".save").click(function () {
         var fullName = $("#fullName").val();
@@ -41,4 +76,21 @@ $(document).ready(function () {
 
 function setActive() {
     $(".navigation").find("#1").addClass("active");
+}
+
+function uploadAvatar() {
+    $("#avatar-form").submit();
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        $("#preview").css("display", "block");
+        reader.onload = function (e) {
+            $('#preview')
+                .attr('src', e.target.result)
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
