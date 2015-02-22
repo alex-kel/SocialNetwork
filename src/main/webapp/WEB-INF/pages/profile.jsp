@@ -32,6 +32,15 @@
 
     $(document).ready(function () {
 
+        $.post("/isFollowed", {"id" : ${id}}, function(data) {
+            if (data) {
+                $(".follow").hide();
+                $(".unfollow").show();
+            } else {
+                $(".follow").show();
+            }
+        });
+
         $.ajax("/photos/getAll", {
             type: 'GET',
             data: {"id" : '${id}'},
@@ -116,12 +125,28 @@
             $(".posts").prepend(newPost);
             newPost.fadeIn(500);
         }
+
+        $(".follow").click(function() {
+            $.post("/follow", {"id" : ${id}});
+            $(".follow").hide();
+            $(".unfollow").show();
+
+        });
+
+        $(".unfollow").click(function() {
+            $.post("/unfollow", {"id" : ${id}});
+            $(".unfollow").hide();
+            $(".follow").show();
+        });
+
+
     });
 </script>
 
 <div class="profile">
     <div class="container">
-        <h1>${fullName}</h1>
+        <h1 class="fullName">${fullName}</h1>
+        <p style="color: green" class="isFollowed"></p>
         <c:if test="${editable}">
             <a class="edit-profile" href="#">Edit profie</a>
             <a class="change-avatar" href="#" style="margin-left: 10px">New profile photo</a>
@@ -136,8 +161,9 @@
                              alt="avatar">
                         <sec:authorize access="isAuthenticated()">
                             <c:if test="${!editable}">
-                                <button type="button" class="btn btn-success">Follow</button>
-                                <button type="button" class="btn btn-primary">Send Message</button>
+                                <button  style="display: none" type="button" class="btn btn-success follow">Follow</button>
+                                <button  style="display: none" type="button" class="btn btn-danger unfollow">Unfollow</button>
+                                <button type="button" class="btn btn-primary msg">Send Message</button>
                             </c:if></sec:authorize>
                     </div>
                 </div>

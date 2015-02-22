@@ -37,6 +37,7 @@ public class UserProfile {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Expose
     private String avatarRef;
 
     private String about;
