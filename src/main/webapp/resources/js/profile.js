@@ -143,8 +143,11 @@ $(document).ready(function () {
             }
         });
     });
-})
-;
+
+   $(".msg").click(function() {
+       $(".send-message").modal('show');
+   });
+});
 
 function setActive() {
     $(".navigation").find("#1").addClass("active");
@@ -177,4 +180,11 @@ function uploadModal(event) {
 
 function clearFlag() {
     isHiden = true;
+}
+
+function sendMsg(id) {
+    $.post("/sendMessage", {"id" : id, "text" : $("#text-message").val()}, function() {
+        $(".send-message").modal('hide');
+        $(".wasSend").stop().fadeIn(400).delay(3000).fadeOut(400);
+    });
 }

@@ -5,7 +5,7 @@
         <ul class="nav nav-pills" style="float: left">
             <li role="presentation" id="1"><a href="/myprofile">My profile</a></li>
             <li role="presentation" id="2"><a href="/friends"> My Friends</a></li>
-            <li role="presentation" id="3"><a href="#">My Messages</a></li>
+            <li role="presentation" id="3"><a href="/messages">My Messages</a></li>
         </ul>
 
         <ul style="float: right" class="nav nav-pills">

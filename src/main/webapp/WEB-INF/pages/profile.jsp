@@ -163,7 +163,7 @@
                             <c:if test="${!editable}">
                                 <button  style="display: none" type="button" class="btn btn-success follow">Follow</button>
                                 <button  style="display: none" type="button" class="btn btn-danger unfollow">Unfollow</button>
-                                <button type="button" class="btn btn-primary msg">Send Message</button>
+                            <button type="button" class="btn btn-primary msg">Send Message</button>
                             </c:if></sec:authorize>
                     </div>
                 </div>
@@ -320,5 +320,26 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade send-message">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">New message to ${fullName}</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="text-message"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="sendMsg(${id})" class="btn btn-primary send">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='wasSend' style='display:none'>Your message to user ${fullName} was send!</div>
 </body>
 </html>

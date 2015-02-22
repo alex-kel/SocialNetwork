@@ -9,6 +9,8 @@ var follower = "<div class=\"follower\" style=\"margin-bottom: 50px\">" +
 
 $(document).ready(function () {
 
+    $(".navigation").find("#2").addClass("active");
+
     $.ajax("/getFollowers", {
         type : "GET",
         contentType: "application/json",
