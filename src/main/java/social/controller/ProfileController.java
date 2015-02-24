@@ -48,7 +48,9 @@ public class ProfileController {
                             HttpServletRequest request, HttpServletResponse response) throws ParseException {
         User user = userService.getCurrentSessionUser();
         UserProfile profile = user.getUserProfile();
-        profile.setFullName(profileEditForm.getFullName());
+        if (profileEditForm.getFullName().length() > 0) {
+            profile.setFullName(profileEditForm.getFullName());
+        }
         profile.setAbout(profileEditForm.getAbout());
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date date = null;
