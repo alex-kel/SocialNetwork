@@ -2,6 +2,9 @@ package social.controller.api;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,14 +64,6 @@ public class FriendAPI {
         followersRepository.delete(followers.getId());
     }
 
-    @RequestMapping(value = "getFriends", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    Object getFriends() {
-        User user = userService.getCurrentSessionUser();
-        Gson gson = gsonService.standardBuilder();
-        return null;
-    }
 
     @RequestMapping(value = "getFollowers", method = RequestMethod.GET)
     public
@@ -81,7 +76,9 @@ public class FriendAPI {
         for (Followers f : subs) {
             followers.add(f.getFollower());
         }
-        return gson.toJson(followers);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(followers), h, HttpStatus.OK);
     }
 
     @RequestMapping(value = "getFollowings", method = RequestMethod.GET)
@@ -95,8 +92,39 @@ public class FriendAPI {
         for (Followers f : subs) {
             following.add(f.getTarget());
         }
-        return gson.toJson(following);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(following), h, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "getAllUsers", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Object getAllUsers() {
+        List<User> users = userService.getAll();
+        Gson gson = gsonService.standardBuilder();
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(users), h, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "getFriends", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Object getFriends() {
+        User user = userService.getCurrentSessionUser();
+        Gson gson = gsonService.standardBuilder();
+        List<Followers> followersList = followersRepository.getFriends();
+        List<User> friends = new ArrayList<>();
+        for (Followers followers : followersList) {
+            if (followers.getFollower().getId() == user.getId()) {
+                friends.add(followers.getTarget());
+            }
+        }
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(friends), h, HttpStatus.OK);
+    }
 
 }

@@ -2,6 +2,9 @@ package social.controller.api;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +56,9 @@ public class WallsAPI {
         Post savedPost = postRepository.save(post);
         Gson gson = gsonService.standardBuilder();
         response.setStatus(200);
-        return gson.toJson(savedPost);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(savedPost), h, HttpStatus.OK);
     }
 
     @RequestMapping(value = "wall/getPosts", method = RequestMethod.GET)
@@ -62,8 +67,11 @@ public class WallsAPI {
     Object getAllPosts(@RequestParam Long id, HttpServletRequest request, HttpServletResponse response) {
         Gson gson = gsonService.standardBuilder();
         List<Post> posts = postService.getAllPostsByOwner(id);
-        response.setStatus(200);
-        return gson.toJson(posts);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(posts), h, HttpStatus.OK);
     }
+
+
 
 }

@@ -257,9 +257,9 @@
                     <form method="POST" enctype="multipart/form-data"
                           action="/uploadAvatar" id="avatar-form">
                                 <span class="file-input btn btn-primary btn-file">
-                Browse&hellip; <input type="file" name="file" id="newAvatar" onchange="readURL(this);">
+                Browse&hellip; <input type="file" name="file" id="newAvatar" onchange="readURLAva(this);">
             </span>
-                        <img class="preview"
+                        <img id="preview-ava"
                              style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
                              src="#" alt="your image"/>
                     </form>
@@ -283,9 +283,9 @@
                     <form method="POST" enctype="multipart/form-data"
                           action="/photos/upload" id="photo-form">
                                 <span class="file-input btn btn-primary btn-file">
-                Browse&hellip; <input type="file" name="file" id="newPhoto" onchange="readURL(this);">
+                Browse <input type="file" name="file" id="newPhoto" onchange="readURLPhoto(this);">
             </span>
-                        <img class="preview"
+                        <img id="preview-photo"
                              style="display: none; margin-top: 20px; margin-left: auto; margin-right: auto"
                              src="#" alt="your image"/>
                     </form>
@@ -311,7 +311,7 @@
                 <img class="bigPhoto" style="margin: auto; display: block">
             </div>
             <div class="modal-footer">
-                <a style='float: left' class="btn btn-default btn-md like-photo"><span class="glyphicon glyphicon-thumbs-up"></span> LIke</a>
+                <a style='float: left' class="btn btn-default btn-md like-photo"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
                 <span class="like-count" style="float: left; margin-top: 7px; margin-left: 10px"></span>
                 <button type="button" class="btn btn-primary prev">Prev</button>
                 <button type="button" class="btn btn-primary next">Next</button>
@@ -340,6 +340,6 @@
     </div>
 </div>
 
-<div class='wasSend' style='display:none'>Your message to user ${fullName} was send!</div>
+<div class='wasSend' style='display:none'>Your message to user ${fullName} was sent!</div>
 </body>
 </html>

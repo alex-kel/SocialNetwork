@@ -23,4 +23,7 @@ public interface FollowersRepository extends JpaRepository<Followers, Long> {
 
     @Query("select f from Followers f where f.follower = ?1 and f.target = ?2")
     Followers isFollowed(User follower, User target);
+
+    @Query("select f1 from Followers f1, Followers f2 where (f1.follower = f2.target and f1.target = f2.follower)")
+    List<Followers> getFriends();
 }

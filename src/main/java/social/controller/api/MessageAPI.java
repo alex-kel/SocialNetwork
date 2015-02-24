@@ -2,6 +2,9 @@ package social.controller.api;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +54,20 @@ public class MessageAPI {
         Gson gson = gsonService.standardBuilder();
         User user = userService.getCurrentSessionUser();
         List<Message> messages = messageRepository.getIncoming(user);
-        return gson.toJson(messages);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(messages), h, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "markAsRead", method = RequestMethod.POST)
+    public
+    void markAsRead(@RequestParam Long id, HttpServletResponse response) {
+        Message message = messageRepository.findOne(id);
+        if (!message.getIsRead()) {
+            message.setIsRead(true);
+            messageRepository.save(message);
+        }
+        response.setStatus(200);
     }
 
     @RequestMapping(value = "getOutcomingMessages", method = RequestMethod.GET)
@@ -61,7 +77,9 @@ public class MessageAPI {
         Gson gson = gsonService.standardBuilder();
         User user = userService.getCurrentSessionUser();
         List<Message> messages = messageRepository.getOutcoming(user);
-        return gson.toJson(messages);
+        HttpHeaders h = new HttpHeaders();
+        h.add("Content-type", "text/html;charset=UTF-8");
+        return new ResponseEntity<String>(gson.toJson(messages), h, HttpStatus.OK);
     }
 
     @RequestMapping(value = "getNewMessageCount", method = RequestMethod.GET)
@@ -71,4 +89,6 @@ public class MessageAPI {
         User user = userService.getCurrentSessionUser();
         return messageRepository.getNew(user).size();
     }
+
+    //TODO getFriends
 }

@@ -161,13 +161,30 @@ function uploadPhoto() {
     $("#photo-form").submit();
 }
 
-function readURL(input) {
+function readURLAva(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        $(".preview").css("display", "block");
+
         reader.onload = function (e) {
-            $('#preview')
+            $('#preview-ava')
                 .attr('src', e.target.result)
+                .width("500px")
+                .css({'display': 'block'});
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function readURLPhoto(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#preview-photo')
+                .attr('src', e.target.result)
+                .width("500px")
+                .css({'display': 'block'});
         };
 
         reader.readAsDataURL(input.files[0]);
